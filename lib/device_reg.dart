@@ -12,27 +12,36 @@ class DevReg extends StatefulWidget {
 
 class _DevRegState extends State<DevReg> {
   String? selectedRole;
-  double _circleSize = 120.0;
+  double _circleSize = 180.0;
   bool _isGrowing = true;
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        if (_isGrowing) {
-          _circleSize += 20;
-          if (_circleSize >= 200) {
-            _isGrowing = false;
+    Timer.periodic(Duration(milliseconds: 800), (timer) {
+      if (mounted) {
+        setState(() {
+          if (_isGrowing) {
+            _circleSize += 20;
+            if (_circleSize >= 220) {
+              _isGrowing = false;
+            }
+          } else {
+            _circleSize -= 20;
+            if (_circleSize <= 180) {
+              _isGrowing = true;
+            }
           }
-        } else {
-          _circleSize -= 20;
-          if (_circleSize <= 120) {
-            _isGrowing = true;
-          }
-        }
-      });
+        });
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel(); // Cancel the timer
+    super.dispose();
   }
 
   @override

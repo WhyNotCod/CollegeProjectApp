@@ -17,6 +17,14 @@ tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
 
-// tasks.named('processResources') {
+// tasks.named(':gradle:pluginDescriptors') {
 //     doNotTrackState()
+//  }
+
+// compileOptions {
+//   sourceCompatibility JavaVersion.VERSION_17
+//   targetCompatibility JavaVersion.VERSION_17
+// }
+// kotlinOptions {
+//   jvmTarget = 17
 // }

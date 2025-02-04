@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
       body: Container(
           margin: const EdgeInsets.only(top: 55.0, bottom: 85.0),
           alignment: Alignment.topRight,
-          color: const Color.fromARGB(255, 81, 211, 33),
+          color: const Color.fromARGB(255, 137, 194, 4),
           child: Column(
             children: <Widget>[
               Text(

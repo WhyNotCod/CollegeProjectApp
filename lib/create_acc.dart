@@ -1,8 +1,9 @@
 //import 'main.dart';
 import 'package:flutter/material.dart';
+//import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+//import 'package:flutter_session_jwt/flutter_session_jwt.dart';
 //import 'package:flutter/scheduler.dart';
 //import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'device_reg.dart';
 
 class AccPage extends StatefulWidget {
@@ -20,31 +21,44 @@ class _AccPageState extends State<AccPage> {
   final TextEditingController companyNameController = TextEditingController();
   final TextEditingController employeePositionController =
       TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
 
   void _sendData() async {
-    String email = emailController.text;
-    String password = passwordController.text;
-    String companyName = companyNameController.text;
-    String employeePosition = employeePositionController.text;
+    // String email = emailController.text;
+    // String password = passwordController.text;
+    // String companyName = companyNameController.text;
+    // String employeePosition = employeePositionController.text;
+    // String username = usernameController.text;
 
     //Uniform Resource Identifier, parsing a string with Uri.parse to create URI
-    var url = Uri.parse('http://yourserver.com/endpoint');
-    // final httpPackageInfo = await http.read(url);
-    // print(httpPackageInfo);
+    var url = Uri.parse('http://52.144.44.45/api');
+    //final httpPackageInfo = await http.read(url);
+    //print(httpPackageInfo);
 
-    var response = await http.post(url, body: {
-      'role': selectedRole,
-      'email': email,
-      'password': password,
-      'companyName': companyName,
-      'employeePosition': employeePosition,
-    });
+    // var response = await http.post(url, body: {
+    //   //'role': selectedRole,
+    //   'username': username,
+    //   'email': email,
+    //   'password': password,
+    //   'companyName': companyName,
+    //   'employeePosition': employeePosition,
+    // });
 
-    if (response.statusCode == 200) {
-      print('Data sent successfully');
-    } else {
-      print('Failed to send data');
-    }
+    // if (response.statusCode == 200) {
+    //   final storage = const FlutterSecureStorage();
+    //   //var token = response.body.token;
+    //   // Parse the response body to get the token
+    //   var responseBody = json.decode(response.body);
+    //   var token = responseBody['token'];
+    //   await FlutterSessionJwt.saveToken(token);
+    //   // to save token in local storage
+    //   await storage.write(key: 'token', value: token);
+
+    //   // to get token from local storage
+    //   var value = await storage.read(key: 'token');
+    // } else {
+    //   print('Failed to send data');
+    // }
   }
 
   @override
@@ -82,6 +96,15 @@ class _AccPageState extends State<AccPage> {
               },
             ),
             if (selectedRole == 'Contractor') ...[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                    controller: usernameController,
+                    decoration: InputDecoration(
+                      labelText: 'Username',
+                      border: OutlineInputBorder(),
+                    )),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
@@ -126,6 +149,15 @@ class _AccPageState extends State<AccPage> {
             ] else if (selectedRole == 'Home Renovator') ...[
               Padding(
                 padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                    controller: usernameController,
+                    decoration: InputDecoration(
+                      labelText: 'Username',
+                      border: OutlineInputBorder(),
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Center(
                   child: TextField(
                       controller: emailController,
@@ -144,7 +176,7 @@ class _AccPageState extends State<AccPage> {
                         labelText: 'Password',
                         border: OutlineInputBorder(),
                       ),
-                      obscureText: false,
+                      obscureText: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your password';
@@ -159,18 +191,17 @@ class _AccPageState extends State<AccPage> {
               onPressed: _sendData,
               child: Text('Send to Server'),
             ),
-            Align(
-              alignment: Alignment.topRight,
-              child: ElevatedButton(
-                child: const Text('Register Device'),
-                onPressed: () {
-                  // Navigate the user to the Device Registration page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DevReg()),
-                  );
-                },
-              ),
+            //Align(
+            //alignment: Alignment.topRight,
+            ElevatedButton(
+              child: const Text('Register Device'),
+              onPressed: () {
+                // Navigate the user to the Device Registration page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DevReg()),
+                );
+              },
             ),
           ]),
         ),
