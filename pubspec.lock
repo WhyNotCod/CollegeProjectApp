@@ -119,7 +119,7 @@ packages:
     source: hosted
     version: "2.0.1"
   flutter_blue_plus_darwin:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_blue_plus_darwin
       sha256: "782e677aca52d99444d8b633869bf127566787330f42eaa67350798b099a1aed"
