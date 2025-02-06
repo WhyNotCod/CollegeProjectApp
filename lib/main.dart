@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'create_acc.dart';
+import 'device_reg.dart';
 //import 'package:http/http.dart' as http;
 
 void main() {
@@ -39,33 +40,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// class CreateAccountState extends StatefulWidget {
-//   @override
-//   _CreateAccountState createState() => _CreateAccountState();
-// }
-
-// class _CreateAccountState extends State<CreateAccountState> {
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 11.0),
-//       child: Center(
-//         child: ElevatedButton(
-//           child: const Text('Create Account'),
-//           onPressed: () {
-//             // Navigate the user to the Create Account page
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                 builder: (context) => AccPage(),
-//               ),
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -135,61 +109,78 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                     ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(
+                    //       horizontal: 8, vertical: 16),
+                    //   child: TextFormField(
+                    //     controller: passwordController,
+                    //     obscureText: true,
+                    //     decoration: const InputDecoration(
+                    //         border: OutlineInputBorder(),
+                    //         labelText: "Password"),
+                    //     validator: (value) {
+                    //       if (value == null || value.isEmpty) {
+                    //         return 'Please enter your password';
+                    //       }
+                    //       return null;
+                    //     },
+                    //   ),
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(
+                    //       horizontal: 8, vertical: 10.0),
+                    //   //key: _formKey,
+                    //   child: Center(
+                    //     child: ElevatedButton(
+                    //       child: const Text('Login'),
+                    //       onPressed: () {
+                    //         if (_formKey.currentState!.validate()) {
+                    //           // Navigate the user to the Home page
+                    //           Navigator.push(
+                    //             context,
+                    //             MaterialPageRoute(
+                    //                 builder: (context) => const HomePage()),
+                    //           );
+                    //         } else {
+                    //           ScaffoldMessenger.of(context).showSnackBar(
+                    //             const SnackBar(
+                    //                 content: Text('Please fill input')),
+                    //           );
+                    //         }
+                    //       },
+                    //     ),
+                    //   ),
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(
+                    //       horizontal: 8, vertical: 8.0),
+                    //   //key: _formKey,
+                    //   child: Center(
+                    //     child: ElevatedButton(
+                    //       child: const Text('Create Account'),
+                    //       onPressed: () {
+                    //         // Navigate the user to the Home page
+                    //         Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //               builder: (context) => AccPage()),
+                    //         );
+                    //       },
+                    //     ),
+                    //   ),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 16),
-                      child: TextFormField(
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Password"),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 10.0),
+                          horizontal: 8, vertical: 6.0),
                       //key: _formKey,
                       child: Center(
                         child: ElevatedButton(
-                          child: const Text('Login'),
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              // Navigate the user to the Home page
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const HomePage()),
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Please fill input')),
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 8.0),
-                      //key: _formKey,
-                      child: Center(
-                        child: ElevatedButton(
-                          child: const Text('Create Account'),
+                          child: const Text('Connect to Devices'),
                           onPressed: () {
                             // Navigate the user to the Home page
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => AccPage()),
+                              MaterialPageRoute(builder: (context) => DevReg()),
                             );
                           },
                         ),
