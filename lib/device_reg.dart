@@ -33,6 +33,7 @@ class _DevRegState extends State<DevReg> {
   bool _isGrowing = true;
   Timer? _timer;
   bool bluetoothState = false;
+  BluetoothDevice? selectedDevice; // Declare the selectedDevice variable
 
   @override
   void initState() {
@@ -118,6 +119,25 @@ class _DevRegState extends State<DevReg> {
                 ),
               ),
             ),
+            ElevatedButton(
+              onPressed: () async {
+                final SelectedDevice? poppedDevice =
+                    await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return SelectBluetoothDevice();
+                    },
+                  ),
+                );
+
+                // Handle the selected device here
+                if (poppedDevice != null) {
+                    // Assign the selected device
+                    selectedDevice = poppedDevice.device;
+                }
+              },
+              child: Text('Select Bluetooth Device'),
+            ),
             SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -139,7 +159,7 @@ class _DevRegState extends State<DevReg> {
                                 ),
                                 leading: Icon(
                                   Icons.devices,
-                                  color: Color(0xFFEDEDED).withOpacity(0.3),
+                                  color: Color(0xFFEDEDED).withValues(),
                                 ),
                                 trailing:
                                     StreamBuilder<BluetoothConnectionState>(
@@ -207,7 +227,7 @@ class _DevRegState extends State<DevReg> {
                                     ),
                                     leading: Icon(
                                       Icons.devices,
-                                      color: Color(0xFFEDEDED).withOpacity(0.3),
+                                      color: Color(0xFFEDEDED).withValues(),
                                     ),
                                     trailing: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
@@ -220,6 +240,16 @@ class _DevRegState extends State<DevReg> {
                                           Navigator.of(context).pop(
                                               SelectedDevice(
                                                   templist[index].device, 0));
+                                          //   final SelectedDevice? poppedDevice =
+                                          //   await Navigator.of(context).push(
+                                          //     MaterialPageRoute(
+                                          //       builder: (context) {
+                                          //         return SelectBluetoothDevice();
+
+                                          //       },
+
+                                          //     ),
+                                          //   );
                                         },
                                         child: Text(
                                           "Connect",
