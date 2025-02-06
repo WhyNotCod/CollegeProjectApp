@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'selected_device.dart'; // Import the SelectedDevice class
+import 'findbleDev.dart';
 
 Future getPermissions() async {
   try {
@@ -18,13 +20,6 @@ class DevReg extends StatefulWidget {
 
   @override
   _DevRegState createState() => _DevRegState();
-}
-
-class SelectedDevice {
-  BluetoothDevice? device;
-  int? state;
-
-  SelectedDevice(this.device, this.state);
 }
 
 class _DevRegState extends State<DevReg> {
@@ -63,35 +58,6 @@ class _DevRegState extends State<DevReg> {
     _timer?.cancel(); // Cancel the timer
     super.dispose();
   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: const Color.fromARGB(255, 37, 97, 194),
-//         title: const Text('Register Your RenoVISION'),
-//       ),
-//       body: Center(
-//         child: AnimatedContainer(
-//             duration: Duration(seconds: 1),
-//             width: _circleSize,
-//             height: _circleSize,
-//             decoration: BoxDecoration(
-//               color: const Color.fromARGB(255, 137, 194, 4),
-//               shape: BoxShape.circle,
-//             ),
-//             child: Align(
-//               alignment: Alignment.center,
-//               child: Text(
-//                 'Locating RenoVISION!',
-//               ),
-//             )),
-
-//       ),
-
-//     );
-//   }
-// }
 
   @override
   Widget build(BuildContext context) {
@@ -132,8 +98,8 @@ class _DevRegState extends State<DevReg> {
 
                 // Handle the selected device here
                 if (poppedDevice != null) {
-                    // Assign the selected device
-                    selectedDevice = poppedDevice.device;
+                  // Assign the selected device
+                  selectedDevice = poppedDevice.device;
                 }
               },
               child: Text('Select Bluetooth Device'),
@@ -273,6 +239,35 @@ class _DevRegState extends State<DevReg> {
     );
   }
 }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: const Color.fromARGB(255, 37, 97, 194),
+//         title: const Text('Register Your RenoVISION'),
+//       ),
+//       body: Center(
+//         child: AnimatedContainer(
+//             duration: Duration(seconds: 1),
+//             width: _circleSize,
+//             height: _circleSize,
+//             decoration: BoxDecoration(
+//               color: const Color.fromARGB(255, 137, 194, 4),
+//               shape: BoxShape.circle,
+//             ),
+//             child: Align(
+//               alignment: Alignment.center,
+//               child: Text(
+//                 'Locating RenoVISION!',
+//               ),
+//             )),
+
+//       ),
+
+//     );
+//   }
+// }
 
 // Future<void> connectToESP32() async {
 //   // Scan for available BLE devices
