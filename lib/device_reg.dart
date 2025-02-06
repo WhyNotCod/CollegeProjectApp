@@ -13,18 +13,18 @@ Future getPermissions() async {
   }
 }
 
-//  @override
-//   void initState() {
-//   // TODO: implement initState
-//   super.initState();
-//   getPermissions();
-//   }
-
 class DevReg extends StatefulWidget {
   const DevReg({super.key});
 
   @override
   _DevRegState createState() => _DevRegState();
+}
+
+class SelectedDevice {
+  BluetoothDevice? device;
+  int? state;
+
+  SelectedDevice(this.device, this.state);
 }
 
 class _DevRegState extends State<DevReg> {
@@ -63,6 +63,35 @@ class _DevRegState extends State<DevReg> {
     super.dispose();
   }
 
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: const Color.fromARGB(255, 37, 97, 194),
+//         title: const Text('Register Your RenoVISION'),
+//       ),
+//       body: Center(
+//         child: AnimatedContainer(
+//             duration: Duration(seconds: 1),
+//             width: _circleSize,
+//             height: _circleSize,
+//             decoration: BoxDecoration(
+//               color: const Color.fromARGB(255, 137, 194, 4),
+//               shape: BoxShape.circle,
+//             ),
+//             child: Align(
+//               alignment: Alignment.center,
+//               child: Text(
+//                 'Locating RenoVISION!',
+//               ),
+//             )),
+
+//       ),
+
+//     );
+//   }
+// }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,44 +118,124 @@ class _DevRegState extends State<DevReg> {
                 ),
               ),
             ),
-            StreamBuilder(
-              stream: FlutterBluePlus.adapterState,
-              builder: (context, snapshot) {
-                if (snapshot.data != null) {
-                  if (snapshot.data == BluetoothAdapterState.on) {
-                    bluetoothState = true;
-                  } else if (snapshot.data == BluetoothAdapterState.off) {
-                    bluetoothState = false;
-                  }
-                  return Container(
-                    height: 30,
-                    child: SwitchListTile(
-                      activeColor: Color(0xFF015164),
-                      activeTrackColor: Color(0xFF0291B5),
-                      inactiveTrackColor: Colors.grey,
-                      inactiveThumbColor: Colors.white,
-                      selectedTileColor: Colors.red,
-                      title: Text(
-                        'Activate Bluetooth',
-                        style: TextStyle(fontSize: 14),
-                      ),
-                      value: bluetoothState,
-                      onChanged: (bool value) {
-                        setState(() {
-                          bluetoothState = !bluetoothState;
-                          if (value) {
-                            FlutterBluePlus.turnOn();
-                          } else {
-                            FlutterBluePlus.turnOff();
-                          }
-                        });
-                      },
-                    ),
-                  );
-                } else {
-                  return Container();
-                }
-              },
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  StreamBuilder<List<BluetoothDevice>>(
+                    stream: Stream.periodic(const Duration(seconds: 10))
+                        .asyncMap((_) => FlutterBluePlus
+                            .connectedDevices), //not systemDevices
+                    initialData: const [],
+                    builder: (c, snapshot) {
+                      snapshot.data.toString();
+                      return Column(
+                        children: snapshot.data!.map((d) {
+                          return Column(
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  d.platformName,
+                                  style: TextStyle(color: Color(0xFFEDEDED)),
+                                ),
+                                leading: Icon(
+                                  Icons.devices,
+                                  color: Color(0xFFEDEDED).withOpacity(0.3),
+                                ),
+                                trailing:
+                                    StreamBuilder<BluetoothConnectionState>(
+                                  stream: d.connectionState,
+                                  initialData:
+                                      BluetoothConnectionState.disconnected,
+                                  builder: (c, snapshot) {
+                                    bool con = snapshot.data ==
+                                        BluetoothConnectionState.connected;
+                                    return ElevatedButton(
+                                      child: Text(
+                                        'Connect',
+                                        style: TextStyle(
+                                            color: con
+                                                ? Colors.green
+                                                : Colors.red),
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                  color: con
+                                                      ? Colors.green
+                                                      : Colors.red),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8)))),
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pop(SelectedDevice(d, 1));
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                              Divider()
+                            ],
+                          );
+                        }).toList(),
+                      );
+                    },
+                  ),
+                  StreamBuilder<List<ScanResult>>(
+                    stream: FlutterBluePlus.scanResults,
+                    initialData: const [],
+                    builder: (c, snapshot) {
+                      List<ScanResult> scanresults = snapshot.data!;
+                      List<ScanResult> templist = [];
+                      scanresults.forEach((element) {
+                        if (element.device.platformName != "") {
+                          templist.add(element);
+                        }
+                      });
+
+                      return Container(
+                        height: 700,
+                        child: ListView.builder(
+                            itemCount: templist.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    title: Text(
+                                      templist[index].device.platformName,
+                                      style:
+                                          TextStyle(color: Color(0xFFEDEDED)),
+                                    ),
+                                    leading: Icon(
+                                      Icons.devices,
+                                      color: Color(0xFFEDEDED).withOpacity(0.3),
+                                    ),
+                                    trailing: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8)),
+                                                side: BorderSide(
+                                                    color: Colors.orange))),
+                                        onPressed: () async {
+                                          Navigator.of(context).pop(
+                                              SelectedDevice(
+                                                  templist[index].device, 0));
+                                        },
+                                        child: Text(
+                                          "Connect",
+                                          style: TextStyle(
+                                              color: Color(0xFFEDEDED)),
+                                        )),
+                                  ),
+                                  Divider()
+                                ],
+                              );
+                            }),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -134,36 +243,6 @@ class _DevRegState extends State<DevReg> {
     );
   }
 }
-  
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: const Color.fromARGB(255, 37, 97, 194),
-//         title: const Text('Register Your RenoVISION'),
-//       ),
-//       body: Center(
-//         child: AnimatedContainer(
-//             duration: Duration(seconds: 1),
-//             width: _circleSize,
-//             height: _circleSize,
-//             decoration: BoxDecoration(
-//               color: const Color.fromARGB(255, 137, 194, 4),
-//               shape: BoxShape.circle,
-//             ),
-//             child: Align(
-//               alignment: Alignment.center,
-//               child: Text(
-//                 'Locating RenoVISION!',
-//               ),
-//             )),
-            
-//       ),
- 
-//     );
-//   }
-// }
 
 // Future<void> connectToESP32() async {
 //   // Scan for available BLE devices
