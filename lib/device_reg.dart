@@ -85,6 +85,68 @@ class _DevRegState extends State<DevReg> {
                 ),
               ),
             ),
+            StreamBuilder(
+                stream: FlutterBluePlus.adapterState,
+                builder: (context, snapshot) {
+                  if (snapshot.data != null) {
+                    if (snapshot.data == BluetoothAdapterState.on) {
+                      bluetoothState = true;
+                    } else if (snapshot.data == BluetoothAdapterState.off) {
+                      bluetoothState = false;
+                    }
+                    return Container(
+                      height: 30,
+                      child: SwitchListTile(
+                          activeColor: Color(0xFF015164),
+                          activeTrackColor: Color(0xFF0291B5),
+                          inactiveTrackColor: Colors.grey,
+                          inactiveThumbColor: Colors.white,
+                          selectedTileColor: Colors.red,
+                          title: Text(
+                            'Activate Bluetooth',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          value: bluetoothState,
+                          onChanged: (bool value) {
+                            setState(() {
+                              bluetoothState = !bluetoothState;
+                              if (value) {
+                                FlutterBluePlus.turnOn();
+                              } else {
+                                FlutterBluePlus.turnOff();
+                              }
+                            });
+                          }),
+                    );
+                  } else {
+                    return Container();
+                  }
+                }),
+            StreamBuilder<bool>(
+              stream: FlutterBluePlus.isScanning,
+              initialData: false,
+              builder: (c, snapshot) {
+                if (snapshot.data!) {
+                  return FloatingActionButton(
+                    child: const Icon(
+                      Icons.stop,
+                      color: Colors.red,
+                    ),
+                    onPressed: () => FlutterBluePlus.stopScan(),
+                    backgroundColor: Color(0xFFEDEDED),
+                  );
+                } else {
+                  return FloatingActionButton(
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.blue.shade300,
+                      ),
+                      backgroundColor: Color(0xFFEDEDED),
+                      onPressed: () => FlutterBluePlus.startScan(
+                          timeout: const Duration(seconds: 4)));
+                }
+              },
+            ),
             ElevatedButton(
               onPressed: () async {
                 final SelectedDevice? poppedDevice =

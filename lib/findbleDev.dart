@@ -14,7 +14,9 @@ class SelectBluetoothDevice extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text('Searching for devices...'),
+
             StreamBuilder<List<ScanResult>>(
+              //stream: FlutterBluePlus.isScanning,
               stream: FlutterBluePlus.scanResults,
               initialData: [],
               builder: (context, snapshot) {
@@ -42,5 +44,6 @@ class SelectBluetoothDevice extends StatelessWidget {
         ),
       ),
     );
+    
   }
 }
