@@ -64,148 +64,149 @@ class _AccPageState extends State<AccPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 37, 97, 194),
-        title: const Text('Create Account'),
-      ),
-      body: Container(
-        margin: const EdgeInsets.only(top: 50.0),
-        alignment: Alignment.center,
-        constraints: BoxConstraints.tightForFinite(width: 200),
-        // decoration: BoxDecoration(
-        //   color: Color.fromARGB(255, 37, 97, 194),
-        // ),
-        child: Center(
-          child: Column(children: <Widget>[
-            //const Text('Work In Progress'),
-            DropdownButtonFormField(
-              decoration: const InputDecoration(
-                label: Text('Who are you'),
-              ),
-              items: [
-                DropdownMenuItem(
-                    value: 'Contractor', child: Text('Contractor')),
-                DropdownMenuItem(
-                    value: 'Home Renovator', child: Text('Home Renovator'))
-              ],
-              onChanged: (value) {
-                //when user changes value in drop down
-                setState(() {
-                  selectedRole = value as String;
-                });
-              },
-            ),
-            if (selectedRole == 'Contractor') ...[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                    controller: usernameController,
-                    decoration: InputDecoration(
-                      labelText: 'Username',
-                      border: OutlineInputBorder(),
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      border: OutlineInputBorder(),
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 37, 97, 194),
+          title: const Text('Create Account'),
+        ),
+        body: Container(
+          margin: const EdgeInsets.only(top: 50.0),
+          alignment: Alignment.center,
+          constraints: BoxConstraints.tightForFinite(width: 200),
+          // decoration: BoxDecoration(
+          //   color: Color.fromARGB(255, 37, 97, 194),
+          // ),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(children: <Widget>[
+                //const Text('Work In Progress'),
+                DropdownButtonFormField(
+                  decoration: const InputDecoration(
+                    label: Text('Who are you'),
                   ),
-                  obscureText: true,
+                  items: [
+                    DropdownMenuItem(
+                        value: 'Contractor', child: Text('Contractor')),
+                    DropdownMenuItem(
+                        value: 'Home Renovator', child: Text('Home Renovator'))
+                  ],
+                  onChanged: (value) {
+                    //when user changes value in drop down
+                    setState(() {
+                      selectedRole = value as String;
+                    });
+                  },
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: companyNameController,
-                  decoration: InputDecoration(
-                    labelText: 'Company Name',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ),
-              Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
+                if (selectedRole == 'Contractor') ...[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: TextField(
-                      controller: employeePositionController,
-                      decoration: InputDecoration(
-                        labelText: 'Employee Position',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ))
-            ] else if (selectedRole == 'Home Renovator') ...[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                    controller: usernameController,
-                    decoration: InputDecoration(
-                      labelText: 'Username',
-                      border: OutlineInputBorder(),
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: TextField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        border: OutlineInputBorder(),
-                      )),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: TextFormField(
+                        controller: usernameController,
+                        decoration: InputDecoration(
+                          labelText: 'Username',
+                          border: OutlineInputBorder(),
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          border: OutlineInputBorder(),
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
                       controller: passwordController,
                       decoration: InputDecoration(
                         labelText: 'Password',
                         border: OutlineInputBorder(),
                       ),
                       obscureText: true,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      }),
-                ),
-              ),
-            ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: companyNameController,
+                      decoration: InputDecoration(
+                        labelText: 'Company Name',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: TextField(
+                          controller: employeePositionController,
+                          decoration: InputDecoration(
+                            labelText: 'Employee Position',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ))
+                ] else if (selectedRole == 'Home Renovator') ...[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                        controller: usernameController,
+                        decoration: InputDecoration(
+                          labelText: 'Username',
+                          border: OutlineInputBorder(),
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: TextField(
+                          controller: emailController,
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            border: OutlineInputBorder(),
+                          )),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: TextFormField(
+                          controller: passwordController,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            border: OutlineInputBorder(),
+                          ),
+                          obscureText: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          }),
+                    ),
+                  ),
+                ],
 
-            ElevatedButton(
-              onPressed: _sendData,
-              child: Text('Send to Server'),
+                ElevatedButton(
+                  onPressed: _sendData,
+                  child: Text('Send to Server'),
+                ),
+                //Align(
+                //alignment: Alignment.topRight,
+                ElevatedButton(
+                  child: const Text('Register Device'),
+                  onPressed: () {
+                    // Navigate the user to the Device Registration page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DevReg()),
+                    );
+                  },
+                ),
+              ]),
             ),
-            //Align(
-            //alignment: Alignment.topRight,
-            ElevatedButton(
-              child: const Text('Register Device'),
-              onPressed: () {
-                // Navigate the user to the Device Registration page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DevReg()),
-                );
-              },
-            ),
-          ]),
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
