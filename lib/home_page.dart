@@ -7,15 +7,16 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 37, 97, 194),
-        title: const Text('Welcome Home'),
-      ),
-      body: Container(
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 37, 97, 194),
+          title: const Text('Welcome Home'),
+        ),
+        body: Container(
           margin: const EdgeInsets.only(top: 55.0, bottom: 85.0),
           alignment: Alignment.topRight,
           color: const Color.fromARGB(255, 137, 194, 4),
-          child: Column(
+          child: SingleChildScrollView(
+              child: Column(
             children: <Widget>[
               Text(
                 'Here are your files',
@@ -41,7 +42,7 @@ class HomePage extends StatelessWidget {
               )
             ],
           )),
-    );
+        ));
   }
 }
 
