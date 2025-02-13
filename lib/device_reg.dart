@@ -24,40 +24,40 @@ class DevReg extends StatefulWidget {
 
 class _DevRegState extends State<DevReg> {
   String? selectedRole;
-  double _circleSize = 180.0;
-  bool _isGrowing = true;
-  Timer? _timer;
+  // double _circleSize = 180.0;
+  // bool _isGrowing = true;
+  // Timer? _timer;
   bool bluetoothState = false;
   BluetoothDevice? selectedDevice; // Declare the selectedDevice variable
 
-  @override
-  void initState() {
-    super.initState();
-    getPermissions(); //ask permission for BLE
-    Timer.periodic(Duration(milliseconds: 800), (timer) {
-      if (mounted) {
-        setState(() {
-          if (_isGrowing) {
-            _circleSize += 20;
-            if (_circleSize >= 220) {
-              _isGrowing = false;
-            }
-          } else {
-            _circleSize -= 20;
-            if (_circleSize <= 180) {
-              _isGrowing = true;
-            }
-          }
-        });
-      }
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getPermissions(); //ask permission for BLE
+  //   Timer.periodic(Duration(milliseconds: 800), (timer) {
+  //     if (mounted) {
+  //       setState(() {
+  //         if (_isGrowing) {
+  //           _circleSize += 20;
+  //           if (_circleSize >= 220) {
+  //             _isGrowing = false;
+  //           }
+  //         } else {
+  //           _circleSize -= 20;
+  //           if (_circleSize <= 180) {
+  //             _isGrowing = true;
+  //           }
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
 
-  @override
-  void dispose() {
-    _timer?.cancel(); // Cancel the timer
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _timer?.cancel(); // Cancel the timer
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -70,21 +70,21 @@ class _DevRegState extends State<DevReg> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedContainer(
-              duration: Duration(seconds: 1),
-              width: _circleSize,
-              height: _circleSize,
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 137, 194, 4),
-                shape: BoxShape.circle,
-              ),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Locating RenoVISION!',
-                ),
-              ),
-            ),
+            //   AnimatedContainer(
+            //     duration: Duration(seconds: 1),
+            //     width: _circleSize,
+            //     height: _circleSize,
+            //     decoration: BoxDecoration(
+            //       color: const Color.fromARGB(255, 137, 194, 4),
+            //       shape: BoxShape.circle,
+            //     ),
+            //     child: Align(
+            //       alignment: Alignment.center,
+            //       child: Text(
+            //         'Locating RenoVISION!',
+            //       ),
+            //     ),
+            //   ),
             StreamBuilder(
                 stream: FlutterBluePlus.adapterState,
                 builder: (context, snapshot) {
