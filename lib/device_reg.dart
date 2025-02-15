@@ -29,6 +29,7 @@ class _DevRegState extends State<DevReg> {
   // Timer? _timer;
   bool bluetoothState = false;
   BluetoothDevice? selectedDevice; // Declare the selectedDevice variable
+  bool ConnectionStatus = false;
 
   // @override
   // void initState() {
@@ -158,11 +159,59 @@ class _DevRegState extends State<DevReg> {
                         },
                       ),
                     );
+                    StreamSubscription<List<int>>? stream_sub;
+                    // stream_sub = lastCharacterist.onValueReceived.listen((value) async{
 
+                    //   if(value.isNotEmpty)
+
+                    //     {
+
+                    //       String s = new String.fromCharCodes(value);
+
+                    //       setState(() {
+
+                    //         buffer.add(Message(s,0));
+
+                    //       });
+
+                    //     }
+
+                    // });
                     // Handle the selected device here
                     if (poppedDevice != null) {
                       // Assign the selected device
-                      selectedDevice = poppedDevice.device;
+                      setState(() {
+                        selectedDevice = poppedDevice.device;
+                        print(poppedDevice.state);
+                        if (poppedDevice.state == 1) {
+                          BluetoothConnectionState? ev;
+                          selectedDevice!.state.listen((event) {
+                            if (ev == BluetoothConnectionState.connected) {
+                              setState(() {
+                                ConnectionStatus = true;
+                              });
+                            } else {
+                              ConnectionStatus = false;
+                            }
+                          });
+                        } else if (poppedDevice.state == 0) {
+                          ConnectionStatus = false;
+                        }
+                      });
+                      await selectedDevice!.connect().then((value) {
+                        selectedDevice!.connectionState.listen((event) async {
+                          setState(() {
+                            if (event == BluetoothConnectionState.connected) {
+                              ConnectionStatus = true;
+                            } else {
+                              ConnectionStatus = false;
+                            }
+                          });
+                          if (event == BluetoothConnectionState.disconnected) {
+                            await stream_sub!.cancel();
+                          }
+                        });
+                      });
                     }
                   },
                   child: Text('Select Bluetooth Device'),
