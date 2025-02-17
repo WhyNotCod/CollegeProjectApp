@@ -27,7 +27,7 @@ class SelectBluetoothDevice extends StatelessWidget {
                         itemBuilder: (context, index) {
                           ScanResult result = snapshot.data![index];
                           return ListTile(
-                            title: Text(result.device.name),
+                            title: Text(result.device.platformName),
                             onTap: () {
                               Navigator.pop(
                                   context, SelectedDevice(result.device, 0));

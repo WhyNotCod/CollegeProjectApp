@@ -6,7 +6,7 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'selected_device.dart'; // Import the SelectedDevice class
 import 'findbleDev.dart';
-import 'device_reg.dart';
+//import 'device_reg.dart';
 
 Future getPermissions() async {
   try {
@@ -126,32 +126,7 @@ class _DevRegState extends State<DevReg> {
                         return Container();
                       }
                     }),
-                StreamBuilder<bool>(
-                  stream: FlutterBluePlus.isScanning,
-                  initialData: false,
-                  builder: (c, snapshot) {
-                    if (snapshot.data!) {
-                      return FloatingActionButton(
-                        onPressed: () => FlutterBluePlus.stopScan(),
-                        backgroundColor: Color.fromARGB(255, 152, 152, 156),
-                        child: const Icon(
-                          Icons.stop,
-                          color: Colors.red,
-                        ),
-                      );
-                    } else {
-                      return FloatingActionButton(
-                        backgroundColor: Color.fromARGB(255, 10, 198, 98),
-                        onPressed: () => FlutterBluePlus.startScan(
-                            timeout: const Duration(seconds: 4)),
-                        child: Icon(
-                          Icons.search,
-                          color: Colors.blue.shade300,
-                        ),
-                      );
-                    }
-                  },
-                ),
+
                 ElevatedButton(
                   onPressed: () async {
                     final SelectedDevice? poppedDevice =
@@ -263,6 +238,44 @@ class _DevRegState extends State<DevReg> {
                                                       BorderRadius.all(
                                                           Radius.circular(8)))),
                                           onPressed: () {
+                                            StreamBuilder<bool>(
+                                              stream:
+                                                  FlutterBluePlus.isScanning,
+                                              initialData: false,
+                                              builder: (c, snapshot) {
+                                                if (snapshot.data!) {
+                                                  return FloatingActionButton(
+                                                    onPressed: () =>
+                                                        FlutterBluePlus
+                                                            .stopScan(),
+                                                    backgroundColor:
+                                                        Color.fromARGB(
+                                                            255, 152, 152, 156),
+                                                    child: const Icon(
+                                                      Icons.stop,
+                                                      color: Colors.red,
+                                                    ),
+                                                  );
+                                                } else {
+                                                  return FloatingActionButton(
+                                                    backgroundColor:
+                                                        Color.fromARGB(
+                                                            255, 10, 198, 98),
+                                                    onPressed: () =>
+                                                        FlutterBluePlus.startScan(
+                                                            timeout:
+                                                                const Duration(
+                                                                    seconds:
+                                                                        12)),
+                                                    child: Icon(
+                                                      Icons.search,
+                                                      color:
+                                                          Colors.blue.shade300,
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                            );
                                             Navigator.of(context)
                                                 .pop(SelectedDevice(d, 1));
                                           },
