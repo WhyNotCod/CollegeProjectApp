@@ -102,7 +102,8 @@ class _DevRegState extends State<DevReg> {
                           child: SwitchListTile(
                               activeColor: Color(0xFF015164),
                               activeTrackColor: Color(0xFF0291B5),
-                              inactiveTrackColor: Colors.grey,
+                              inactiveTrackColor:
+                                  const Color.fromARGB(255, 5, 125, 13),
                               inactiveThumbColor: Colors.white,
                               selectedTileColor: Colors.red,
                               title: Text(
