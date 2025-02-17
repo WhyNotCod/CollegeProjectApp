@@ -131,22 +131,23 @@ class _DevRegState extends State<DevReg> {
                   builder: (c, snapshot) {
                     if (snapshot.data!) {
                       return FloatingActionButton(
+                        onPressed: () => FlutterBluePlus.stopScan(),
+                        backgroundColor: Color.fromARGB(255, 13, 37, 220),
                         child: const Icon(
                           Icons.stop,
                           color: Colors.red,
                         ),
-                        onPressed: () => FlutterBluePlus.stopScan(),
-                        backgroundColor: Color(0xFFEDEDED),
                       );
                     } else {
                       return FloatingActionButton(
-                          child: Icon(
-                            Icons.search,
-                            color: Colors.blue.shade300,
-                          ),
-                          backgroundColor: Color(0xFFEDEDED),
-                          onPressed: () => FlutterBluePlus.startScan(
-                              timeout: const Duration(seconds: 4)));
+                        backgroundColor: Color.fromARGB(255, 10, 198, 98),
+                        onPressed: () => FlutterBluePlus.startScan(
+                            timeout: const Duration(seconds: 4)),
+                        child: Icon(
+                          Icons.search,
+                          color: Colors.blue.shade300,
+                        ),
+                      );
                     }
                   },
                 ),
