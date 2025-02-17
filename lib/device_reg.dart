@@ -342,7 +342,8 @@ class _DevRegState extends State<DevReg> {
                                             child: Text(
                                               "Connect",
                                               style: TextStyle(
-                                                  color: Color(0xFFEDEDED)),
+                                                  color: Color.fromARGB(
+                                                      255, 29, 119, 157)),
                                             )),
                                       ),
                                       Divider()
