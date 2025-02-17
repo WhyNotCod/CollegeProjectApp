@@ -12,6 +12,25 @@ class SelectBluetoothDevice extends StatelessWidget {
         body: Center(
           child: SingleChildScrollView(
             child: Column(
+//               floatingActionButton: StreamBuilder<bool>(
+//   stream: FlutterBluePlus.isScanning,
+//   initialData: false,
+//   builder: (c, snapshot) {
+//     if (snapshot.data!) {
+//       return FloatingActionButton(
+//         child: const Icon(Icons.stop,color: Colors.red,),
+//         onPressed: () => FlutterBluePlus.stopScan(),
+//         backgroundColor:Color(0xFFEDEDED),
+//       );
+//     } else {
+//       return FloatingActionButton(
+//           child: Icon(Icons.search,color: Colors.blue.shade300,),
+//           backgroundColor:Color(0xFFEDEDED),
+//           onPressed: ()=> FlutterBluePlus.startScan(timeout: const Duration(seconds: 4))
+//           );
+//     }
+//   },
+// ),
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text('Searching for devices...'),
