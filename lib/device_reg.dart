@@ -133,7 +133,7 @@ class _DevRegState extends State<DevReg> {
                     if (snapshot.data!) {
                       return FloatingActionButton(
                         onPressed: () => FlutterBluePlus.stopScan(),
-                        backgroundColor: Color.fromARGB(255, 13, 37, 220),
+                        backgroundColor: Color.fromARGB(255, 152, 152, 156),
                         child: const Icon(
                           Icons.stop,
                           color: Colors.red,
@@ -308,7 +308,8 @@ class _DevRegState extends State<DevReg> {
                                         title: Text(
                                           templist[index].device.platformName,
                                           style: TextStyle(
-                                              color: Color(0xFFEDEDED)),
+                                              color: Color.fromARGB(
+                                                  255, 29, 119, 157)),
                                         ),
                                         leading: Icon(
                                           Icons.devices,
