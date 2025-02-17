@@ -6,6 +6,7 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'selected_device.dart'; // Import the SelectedDevice class
 import 'findbleDev.dart';
+import 'device_reg.dart';
 
 Future getPermissions() async {
   try {
@@ -185,7 +186,7 @@ class _DevRegState extends State<DevReg> {
                         print(poppedDevice.state);
                         if (poppedDevice.state == 1) {
                           BluetoothConnectionState? ev;
-                          selectedDevice!.state.listen((event) {
+                          selectedDevice!.connectionState.listen((event) {
                             if (ev == BluetoothConnectionState.connected) {
                               setState(() {
                                 ConnectionStatus = true;
@@ -233,8 +234,9 @@ class _DevRegState extends State<DevReg> {
                                   ListTile(
                                     title: Text(
                                       d.platformName,
-                                      style:
-                                          TextStyle(color: Color(0xFFEDEDED)),
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 212, 12, 12)),
                                     ),
                                     leading: Icon(
                                       Icons.devices,
@@ -249,13 +251,6 @@ class _DevRegState extends State<DevReg> {
                                         bool con = snapshot.data ==
                                             BluetoothConnectionState.connected;
                                         return ElevatedButton(
-                                          child: Text(
-                                            'Connect',
-                                            style: TextStyle(
-                                                color: con
-                                                    ? Colors.green
-                                                    : Colors.red),
-                                          ),
                                           style: ElevatedButton.styleFrom(
                                               shape: RoundedRectangleBorder(
                                                   side: BorderSide(
@@ -269,6 +264,14 @@ class _DevRegState extends State<DevReg> {
                                             Navigator.of(context)
                                                 .pop(SelectedDevice(d, 1));
                                           },
+                                          child: Text(
+                                            'Connect',
+                                            style: TextStyle(
+                                              color: con
+                                                  ? Colors.green
+                                                  : Colors.red,
+                                            ),
+                                          ),
                                         );
                                       },
                                     ),
