@@ -78,54 +78,54 @@ class _DevRegState extends State<DevReg> {
                   }
                 },
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  // final SelectedDevice? poppedDevice =
-                  //     await Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) {
-                  //       return SelectBluetoothDevice();
-                  //     },
-                  //   ),
-                  // );
-                  // StreamSubscription<List<int>>? stream_sub;
-                  // if (poppedDevice != null) {
-                  //   setState(() {
-                  //     selectedDevice = poppedDevice.device;
-                  //     print(poppedDevice.state);
-                  //     if (poppedDevice.state == 1) {
-                  //       BluetoothConnectionState? ev;
-                  //       selectedDevice!.connectionState.listen((event) {
-                  //         if (ev == BluetoothConnectionState.connected) {
-                  //           setState(() {
-                  //             ConnectionStatus = true;
-                  //           });
-                  //         } else {
-                  //           ConnectionStatus = false;
-                  //         }
-                  //       });
-                  //     } else if (poppedDevice.state == 0) {
-                  //       ConnectionStatus = false;
-                  //     }
-                  //   });
-                  //   await selectedDevice!.connect().then((value) {
-                  //     selectedDevice!.connectionState.listen((event) async {
-                  //       setState(() {
-                  //         if (event == BluetoothConnectionState.connected) {
-                  //           ConnectionStatus = true;
-                  //         } else {
-                  //           ConnectionStatus = false;
-                  //         }
-                  //       });
-                  //       if (event == BluetoothConnectionState.disconnected) {
-                  //         await stream_sub!.cancel();
-                  //       }
-                  //     });
-                  //   });
-                  // }
-                },
-                child: Text('Select Bluetooth Device'),
-              ),
+              // ElevatedButton(
+              //   onPressed: () async {
+              // final SelectedDevice? poppedDevice =
+              //     await Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (context) {
+              //       return SelectBluetoothDevice();
+              //     },
+              //   ),
+              // );
+              // StreamSubscription<List<int>>? stream_sub;
+              // if (poppedDevice != null) {
+              //   setState(() {
+              //     selectedDevice = poppedDevice.device;
+              //     print(poppedDevice.state);
+              //     if (poppedDevice.state == 1) {
+              //       BluetoothConnectionState? ev;
+              //       selectedDevice!.connectionState.listen((event) {
+              //         if (ev == BluetoothConnectionState.connected) {
+              //           setState(() {
+              //             ConnectionStatus = true;
+              //           });
+              //         } else {
+              //           ConnectionStatus = false;
+              //         }
+              //       });
+              //     } else if (poppedDevice.state == 0) {
+              //       ConnectionStatus = false;
+              //     }
+              //   });
+              //   await selectedDevice!.connect().then((value) {
+              //     selectedDevice!.connectionState.listen((event) async {
+              //       setState(() {
+              //         if (event == BluetoothConnectionState.connected) {
+              //           ConnectionStatus = true;
+              //         } else {
+              //           ConnectionStatus = false;
+              //         }
+              //       });
+              //       if (event == BluetoothConnectionState.disconnected) {
+              //         await stream_sub!.cancel();
+              //       }
+              //     });
+              //   });
+              // }
+              // },
+              Text('Select Bluetooth Device'),
+
               SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
@@ -232,6 +232,29 @@ class _DevRegState extends State<DevReg> {
                                         ),
                                       ),
                                       onPressed: () async {
+                                        StreamSubscription<List<int>>?
+                                            stream_sub;
+                                        await selectedDevice!
+                                            .connect()
+                                            .then((value) {
+                                          selectedDevice!.connectionState
+                                              .listen((event) async {
+                                            setState(() {
+                                              if (event ==
+                                                  BluetoothConnectionState
+                                                      .connected) {
+                                                ConnectionStatus = true;
+                                              } else {
+                                                ConnectionStatus = false;
+                                              }
+                                            });
+                                            if (event ==
+                                                BluetoothConnectionState
+                                                    .disconnected) {
+                                              await stream_sub!.cancel();
+                                            }
+                                          });
+                                        });
                                         Navigator.of(context).pop(
                                             SelectedDevice(
                                                 templist[index].device, 0));
@@ -243,8 +266,7 @@ class _DevRegState extends State<DevReg> {
                                             },
                                           ),
                                         );
-                                        StreamSubscription<List<int>>?
-                                            stream_sub;
+
                                         if (poppedDevice != null) {
                                           setState(() {
                                             selectedDevice =
@@ -268,27 +290,6 @@ class _DevRegState extends State<DevReg> {
                                                 0) {
                                               ConnectionStatus = false;
                                             }
-                                          });
-                                          await selectedDevice!
-                                              .connect()
-                                              .then((value) {
-                                            selectedDevice!.connectionState
-                                                .listen((event) async {
-                                              setState(() {
-                                                if (event ==
-                                                    BluetoothConnectionState
-                                                        .connected) {
-                                                  ConnectionStatus = true;
-                                                } else {
-                                                  ConnectionStatus = false;
-                                                }
-                                              });
-                                              if (event ==
-                                                  BluetoothConnectionState
-                                                      .disconnected) {
-                                                await stream_sub!.cancel();
-                                              }
-                                            });
                                           });
                                         }
                                       },
