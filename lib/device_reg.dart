@@ -17,10 +17,10 @@ class DevReg extends StatefulWidget {
   const DevReg({super.key});
 
   @override
-  _DevRegState createState() => _DevRegState();
+  DevRegState createState() => DevRegState();
 }
 
-class _DevRegState extends State<DevReg> {
+class DevRegState extends State<DevReg> {
   String? selectedRole;
   bool bluetoothState = false;
   BluetoothDevice? selectedDevice; // Declare the selectedDevice variable
@@ -47,32 +47,32 @@ class _DevRegState extends State<DevReg> {
                     } else if (snapshot.data == BluetoothAdapterState.off) {
                       bluetoothState = false;
                     }
-                    return Container(
-                      height: 30,
-                      child: SwitchListTile(
-                        activeColor: Color(0xFF015164),
-                        activeTrackColor: Color(0xFF0291B5),
-                        inactiveTrackColor:
-                            const Color.fromARGB(255, 5, 125, 13),
-                        inactiveThumbColor: Colors.white,
-                        selectedTileColor: Colors.red,
-                        title: Text(
-                          'Activate Bluetooth',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        value: bluetoothState,
-                        onChanged: (bool value) {
-                          setState(() {
-                            bluetoothState = !bluetoothState;
-                            if (value) {
-                              FlutterBluePlus.turnOn();
-                            } else {
-                              FlutterBluePlus.turnOff();
-                            }
-                          });
-                        },
-                      ),
-                    );
+                    // return SizedBox(
+                    //   height: 30,
+                    //   child: SwitchListTile(
+                    //     activeColor: Color(0xFF015164),
+                    //     activeTrackColor: Color(0xFF0291B5),
+                    //     inactiveTrackColor:
+                    //         const Color.fromARGB(255, 5, 125, 13),
+                    //     inactiveThumbColor: Colors.white,
+                    //     selectedTileColor: Colors.red,
+                    //     title: Text(
+                    //       'Activate Bluetooth',
+                    //       style: TextStyle(fontSize: 14),
+                    //     ),
+                    //     value: bluetoothState,
+                    //     onChanged: (bool value) {
+                    //       setState(() {
+                    //         bluetoothState = !bluetoothState;
+                    //         if (value) {
+                    //           FlutterBluePlus.turnOn();
+                    //         } else {
+                    //           FlutterBluePlus.turnOff();
+                    //         }
+                    //       });
+                    //     },
+                    //   ),
+                    // );
                   } else {
                     return Container();
                   }
@@ -204,7 +204,7 @@ class _DevRegState extends State<DevReg> {
                           }
                         });
 
-                        return Container(
+                        return SizedBox(
                           height: 700,
                           child: ListView.builder(
                             itemCount: templist.length,
@@ -232,66 +232,17 @@ class _DevRegState extends State<DevReg> {
                                         ),
                                       ),
                                       onPressed: () async {
-                                        StreamSubscription<List<int>>?
-                                            stream_sub;
-                                        await selectedDevice!
-                                            .connect()
-                                            .then((value) {
-                                          selectedDevice!.connectionState
-                                              .listen((event) async {
-                                            setState(() {
-                                              if (event ==
-                                                  BluetoothConnectionState
-                                                      .connected) {
-                                                ConnectionStatus = true;
-                                              } else {
-                                                ConnectionStatus = false;
-                                              }
-                                            });
-                                            if (event ==
+                                        await templist[index].device.connect();
+                                        templist[index]
+                                            .device
+                                            .connectionState
+                                            .listen((event) {
+                                          setState(() {
+                                            ConnectionStatus = event ==
                                                 BluetoothConnectionState
-                                                    .disconnected) {
-                                              await stream_sub!.cancel();
-                                            }
+                                                    .connected;
                                           });
                                         });
-                                        Navigator.of(context).pop(
-                                            SelectedDevice(
-                                                templist[index].device, 0));
-                                        final SelectedDevice? poppedDevice =
-                                            await Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return SelectBluetoothDevice();
-                                            },
-                                          ),
-                                        );
-
-                                        if (poppedDevice != null) {
-                                          setState(() {
-                                            selectedDevice =
-                                                poppedDevice.device;
-                                            print(poppedDevice.state);
-                                            if (poppedDevice.state == 1) {
-                                              BluetoothConnectionState? ev;
-                                              selectedDevice!.connectionState
-                                                  .listen((event) {
-                                                if (ev ==
-                                                    BluetoothConnectionState
-                                                        .connected) {
-                                                  setState(() {
-                                                    ConnectionStatus = true;
-                                                  });
-                                                } else {
-                                                  ConnectionStatus = false;
-                                                }
-                                              });
-                                            } else if (poppedDevice.state ==
-                                                0) {
-                                              ConnectionStatus = false;
-                                            }
-                                          });
-                                        }
                                       },
                                       child: Text(
                                         "Connect",
